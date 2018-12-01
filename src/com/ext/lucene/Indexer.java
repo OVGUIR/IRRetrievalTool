@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -16,6 +15,7 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -30,11 +30,14 @@ public class Indexer
  	{ 
  		try 
  		{
+ 			long startTime = System.currentTimeMillis();
  			createIndexWriter(indexFilePath); 
  			checkFileValidity(sourceFilePath); 
  			System.out.println("total no of files indexed: "+count);
  			closeIndexWriter(); 
  			MyQueryParser.searchIndexWithQueryParser(indexFilePath);
+ 			long endTime = System.currentTimeMillis();
+ 			System.out.println("Total time Taken in milliseconds: "+(endTime-startTime));
  		} 
  		catch (ParseException e) 
  		{ 
@@ -67,6 +70,16 @@ public class Indexer
  		}
  	}
 
+ 	private void updateDocument(File file,Document doc) throws IOException {
+ 	      Document document = new Document();
+
+ 	      //update indexes for file contents
+ 	      writer.updateDocument(
+ 	         new Term(LuceneConstants.FILE_NAME,
+ 	         file.getName()),document); 
+ 	      //writer.close();
+ 	   } 
+ 	
  //Filters out the files that can be indexed.
 
  	public void checkFileValidity(String sourceFilePath) 
@@ -85,22 +98,28 @@ public class Indexer
  					checkFileValidity(file.toString());
  					
  				}
- 				if (!file.isDirectory() && !file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
-					 && file.isFile() && file.getName().toLowerCase().endsWith(".txt")) 
- 				{
+ 				else if(!file.isDirectory()) {
+ 					
+ 					if (!file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
+					 && file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
  					count++;
  					System.out.println(file.getName());
  					//System.out.println("------------if  .txt -----------");
  					indexTextFiles(file);
- 				}
- 				if (!file.isDirectory() && !file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
+ 					}
+ 				
+ 					if (!file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
  					&& file.isFile() && file.getName().toLowerCase().endsWith(".html")) 
- 	 			{
+ 					{
  					count++;
  					System.out.println(file.getName());
  					//System.out.println("------------ if  .html -----------");
  	 				indexTextFiles(file);
- 	 			}
+ 					}
+ 				}
+ 				else {
+ 					System.out.println(" Not a valid file format ");
+ 				}
  				
  			} 
  			catch (Exception e) 
@@ -122,6 +141,7 @@ public class Indexer
 // 		FileReader fr = null;
 // 		fr = new FileReader(File f);
  		Document doc = new Document(); 
+ 		updateDocument(file,doc);
  		doc.add(new TextField("content", new FileReader(file))); 
  		doc.add(new StringField(LuceneConstants.FILE_NAME, file.getName(),Field.Store.YES));
  		doc.add(new StringField(LuceneConstants.FILE_PATH,file.getCanonicalPath(),Field.Store.YES));
