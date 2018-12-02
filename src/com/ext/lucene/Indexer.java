@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Scanner;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -12,10 +13,12 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexDeletionPolicy;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -24,16 +27,18 @@ public class Indexer
 {
  public IndexWriter writer = null;
  public File indexDirectory = null;
+ public File sourceDirectory = null;
  public static int count = 0;
 
- 	public Indexer(String sourceFilePath,String indexFilePath) throws FileNotFoundException, CorruptIndexException, IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException 
+ 	public Indexer(String sourceFilePath,String indexFilePath,String createorupdate) throws FileNotFoundException, CorruptIndexException, IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException 
  	{ 
  		try 
  		{
  			long startTime = System.currentTimeMillis();
- 			createIndexWriter(indexFilePath); 
- 			checkFileValidity(sourceFilePath); 
- 			System.out.println("total no of files indexed: "+count);
+ 			if(createorupdate.equalsIgnoreCase("create")||createorupdate.equalsIgnoreCase("update"))
+ 			createIndexWriter(indexFilePath,createorupdate,sourceFilePath); 
+ 			//checkFileValidity(sourceFilePath); 
+ 			System.out.println("total no of files"+createorupdate+"d: "+count);
  			closeIndexWriter(); 
  			MyQueryParser.searchIndexWithQueryParser(indexFilePath);
  			long endTime = System.currentTimeMillis();
@@ -49,20 +54,43 @@ public class Indexer
  * IndexWriter writes the data to the index.
  * analyzer : its a standard analyzer, in this case it filters out englishStopWords and also analyses TFIDF
  */
- 	public void createIndexWriter(String indexFilePath) 
+ 	public void createIndexWriter(String indexFilePath,String createorupdate,String sourceFilePath) 
  	{
  		try 
  		{
- 			indexDirectory = new File(indexFilePath); //here "indexDirectory" is the physical directory address like: "C:\dataset\" etc.
+ 			indexDirectory = new File(indexFilePath);
+ 			sourceDirectory = new File(sourceFilePath);
  			if (!indexDirectory.exists()) 
  			{  
  				indexDirectory.mkdir();  
+ 			} 
+ 			if (!sourceDirectory.exists()) 
+ 			{  
+ 				System.out.println("Please provide the data file for indexing"); 
+ 				System.exit(0);
  			} 
  			FSDirectory dir = FSDirectory.open(indexDirectory.toPath()); 
  			//System.out.println("dir    "+dir);
  			Analyzer analyzer = new MyStemmingAnalyzer(); 
  			IndexWriterConfig config = new IndexWriterConfig(analyzer);
- 			writer = new IndexWriter(dir, config); 
+ 			//config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+ 			//IndexDeletionPolicy deletionPolicy = config.getIndexDeletionPolicy();
+ 			//config.setIndexDeletionPolicy(IndexDeletionPolicy);
+ 			writer = new IndexWriter(dir, config);
+ 			if (createorupdate.equalsIgnoreCase("create")) {
+ 				// Create a new index in the directory, removing any
+ 				// previously indexed documents:
+ 				config.setOpenMode(OpenMode.CREATE);
+ 				checkFileValidity(sourceFilePath);
+ 				
+ 			} else if (createorupdate.equalsIgnoreCase("update"))  {
+ 				// Add new documents to an existing index:
+ 				config.setOpenMode(OpenMode.APPEND);
+ 				checkFileValidity(sourceFilePath);
+ 			}
+ 			else
+ 				System.out.println("Search the existing Index");
+ 			 
  		} 
  		catch (Exception ex) 
  		{ 
@@ -70,7 +98,7 @@ public class Indexer
  		}
  	}
 
- 	private void updateDocument(File file,Document doc) throws IOException {
+ 	private void updateDocument(File file) throws IOException {
  	      Document document = new Document();
 
  	      //update indexes for file contents
@@ -87,6 +115,9 @@ public class Indexer
  		
  		File[] filesToIndex = new File[200000]; // suppose there are 200000 files at max 
  		filesToIndex = new File(sourceFilePath).listFiles(); 
+ 		if(filesToIndex.equals(null))
+ 		System.out.println("Please provide the data for indexing");
+ 		else {
  		for (File file : filesToIndex) 
  		{
  			
@@ -102,7 +133,6 @@ public class Indexer
  					
  					if (!file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
 					 && file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
- 					count++;
  					System.out.println(file.getName());
  					//System.out.println("------------if  .txt -----------");
  					indexTextFiles(file);
@@ -111,7 +141,6 @@ public class Indexer
  					if (!file.isHidden() && file.exists() && file.canRead() && file.length() > 0.0 
  					&& file.isFile() && file.getName().toLowerCase().endsWith(".html")) 
  					{
- 					count++;
  					System.out.println(file.getName());
  					//System.out.println("------------ if  .html -----------");
  	 				indexTextFiles(file);
@@ -129,9 +158,11 @@ public class Indexer
  			}
  		}
  		}
+ 		}
  	/**
  	 * writes file to index
  	 * @param file : file to index
+ 	 * @return 
  	 * @throws CorruptIndexException
  	 * @throws IOException
  	 */
@@ -141,16 +172,29 @@ public class Indexer
 // 		FileReader fr = null;
 // 		fr = new FileReader(File f);
  		Document doc = new Document(); 
- 		updateDocument(file,doc);
- 		doc.add(new TextField("content", new FileReader(file))); 
+ 		//updateDocument(file,doc);
+ 		doc.add(new TextField("content", new FileReader(file)));
+ 		doc.add(new TextField("title", new FileReader(file)));
  		doc.add(new StringField(LuceneConstants.FILE_NAME, file.getName(),Field.Store.YES));
  		doc.add(new StringField(LuceneConstants.FILE_PATH,file.getCanonicalPath(),Field.Store.YES));
- 		if (doc != null) 
- 		{
- 			writer.addDocument(doc); 
+ 		System.out.println("   mode  "+writer.getConfig().getOpenMode());
+ 		if (doc != null) {
+ 		if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
+			System.out.println("adding " );
+			writer.addDocument(doc);
+			count++;		
+		} else if (writer.getConfig().getOpenMode() == OpenMode.APPEND) {
+			System.out.println("updating " + file);
+			writer.updateDocument(new Term(LuceneConstants.FILE_NAME,
+		    file.getName()),doc);
+			count++;
+		}
+		else{}
  		}
+ 	
  	}
 
+ 	
 	// Closes the IndexWriter
  	public void closeIndexWriter() 
  	{
@@ -168,7 +212,14 @@ public class Indexer
 //Main function to call the indexer
        public static void main(String[] args) throws FileNotFoundException, CorruptIndexException, IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException 
        {
-                 Indexer indxr1 = new Indexer("C:\\Users\\AKMANI\\Desktop\\lucene\\data\\","C:\\Users\\AKMANI\\Desktop\\lucene\\index\\");
+    	   Scanner systemscanner = new Scanner(System.in);
+    	   System.out.print("Select the below option for indexing\n");
+    	   System.out.print("1.create\n2.update\n3.exit\n");
+    	   System.out.print("Anything other than the above options will select the available index as default\n");
+    	   String createorupdate = systemscanner.next();
+    	   if (createorupdate.equalsIgnoreCase("exit")) System.exit(0);
+    	   System.out.println("Option selected: "+createorupdate);
+           Indexer indxr1 = new Indexer("C:\\Users\\AKMANI\\Desktop\\lucene\\data\\","C:\\Users\\AKMANI\\Desktop\\lucene\\index\\",createorupdate);
                 //  NOTE: we can easily repeat the same process for all 50 directories ... no need to discuss how ???
        }
 
