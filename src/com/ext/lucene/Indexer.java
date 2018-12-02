@@ -21,6 +21,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.jsoup.Jsoup;
 
 
 public class Indexer 
@@ -38,7 +39,7 @@ public class Indexer
  			if(createorupdate.equalsIgnoreCase("create")||createorupdate.equalsIgnoreCase("update"))
  			createIndexWriter(indexFilePath,createorupdate,sourceFilePath); 
  			//checkFileValidity(sourceFilePath); 
- 			System.out.println("total no of files"+createorupdate+"d: "+count);
+ 			System.out.println("total no of files "+createorupdate+"d: "+count);
  			closeIndexWriter(); 
  			MyQueryParser.searchIndexWithQueryParser(indexFilePath);
  			long endTime = System.currentTimeMillis();
@@ -143,7 +144,7 @@ public class Indexer
  					{
  					System.out.println(file.getName());
  					//System.out.println("------------ if  .html -----------");
- 	 				indexTextFiles(file);
+ 					indexHTMLFiles(file);
  					}
  				}
  				else {
@@ -194,6 +195,38 @@ public class Indexer
  	
  	}
 
+ 	public void indexHTMLFiles(File file) throws CorruptIndexException, IOException 
+    {
+ 		/*		Fix the indexing Field.Index.NOT_ANALYZED     */
+// 		FileReader fr = null;
+// 		fr = new FileReader(File f);
+    	org.apache.lucene.document.Document doc = new Document();
+    	org.jsoup.nodes.Document document = Jsoup.parse(file, "utf-8");
+    	String title = document.title();
+ 		System.out.println("title*****"+document.title());
+ 		System.out.println("******"+document.body().toString());
+ 		System.out.println("******"+document.body());
+ 		//updateDocument(file,doc);
+ 		//Document doc new Document();
+		doc.add(new TextField("title", new FileReader(file)));
+ 		doc.add(new TextField("body", file.getName(),Field.Store.YES));
+ 		doc.add(new StringField(LuceneConstants.FILE_NAME, file.getName(),Field.Store.YES));
+ 		doc.add(new StringField(LuceneConstants.FILE_PATH,file.getCanonicalPath(),Field.Store.YES));
+ 		if (doc != null) {
+ 		if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
+			System.out.println("adding "+file);
+			writer.addDocument(doc);
+			count++;		
+		} else if (writer.getConfig().getOpenMode() == OpenMode.APPEND) {
+			System.out.println("updating " + file);
+			writer.updateDocument(new Term(LuceneConstants.FILE_NAME,
+		    file.getName()),doc);
+			count++;
+		}
+		else{}
+ 		}
+ 	
+ 	}
  	
 	// Closes the IndexWriter
  	public void closeIndexWriter() 
