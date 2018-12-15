@@ -1,1 +1,1 @@
-content,title,
+content,body,title

@@ -2,12 +2,20 @@ package com.ext.lucene;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-
-/* Search multiple fields concurrently (multifield search): not only search the
-document’s text (body tag), but also its title */
-
+/*
+ * Authors: Akhila Vockaligara Mani, Poorvi Mandyam Bhoolokam, Md Raahim Al Amin, Susmita Siddaramayya Mathapathi
+ * This class invocates the method for searching multiple fields concurrently
+ * The fields are fetched from a Properties.txt
+ * The fileds are comma separated values where the last item ends with a comma-
+ * example: content,body,title
+ */
 public class SearchFields {
-public static String[] getSearchFields() throws IOException {
+	/**
+	 * read the properties file to search multiple fields concurrently
+	 * @return String array
+	 * @throws IOException
+	 */
+	public static String[] getSearchFields() throws IOException {
 		int n = 0;
 		File file = new File((".\\src\\properties\\Properties.txt"));
 		@SuppressWarnings("resource")
@@ -16,17 +24,14 @@ public static String[] getSearchFields() throws IOException {
 		@SuppressWarnings("resource")
 		Scanner scanner2 = new Scanner(file);
 		scanner2.useDelimiter(",");
-	
-	while(scanner1.hasNext()) {
-		n = n+1;
-		scanner1.next();
+		while(scanner1.hasNext()) {
+			n = n+1;
+		    scanner1.next();
+		    }
+		String[] allfields = new String[n];
+	    for(int i=0;i<n;i++) {
+	    	allfields[i] = scanner2.next();
+	    	}
+	    return allfields;
+	    }
 	}
-	String[] allfields = new String[n];
-	System.out.println("allfields	");
-	for(int i=0;i<n;i++) {
-		allfields[i] = scanner2.next();
-		System.out.println(i+"\t"+allfields[i]);
-	}
-	return allfields;
-}
-}

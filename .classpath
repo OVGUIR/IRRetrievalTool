@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/core/lucene-core-7.5.0.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/common/lucene-analyzers-common-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/queryparser/lucene-queryparser-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/icu/lucene-analyzers-icu-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/icu/lib/icu4j-62.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/kuromoji/lucene-analyzers-kuromoji-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/morfologik/lucene-analyzers-morfologik-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/morfologik/lib/morfologik-fsa-2.1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/morfologik/lib/morfologik-polish-2.1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/morfologik/lib/morfologik-stemming-2.1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/morfologik/lib/morfologik-ukrainian-search-3.9.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/nori/lucene-analyzers-nori-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/opennlp/lucene-analyzers-opennlp-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/opennlp/lib/opennlp-tools-1.9.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/phonetic/lucene-analyzers-phonetic-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/phonetic/lib/commons-codec-1.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/smartcn/lucene-analyzers-smartcn-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/analysis/stempel/lucene-analyzers-stempel-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/backward-codecs/lucene-backward-codecs-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lucene-benchmark-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lib/commons-compress-1.18.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lib/icu4j-62.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lib/nekohtml-1.9.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lib/spatial4j-0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/benchmark/lib/xercesImpl-2.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/classification/lucene-classification-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/codecs/lucene-codecs-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/demo/lucene-demo-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/expressions/lucene-expressions-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/expressions/lib/antlr4-runtime-4.5.1-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/expressions/lib/asm-5.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/expressions/lib/asm-commons-5.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/facet/lucene-facet-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/facet/lib/hppc-0.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/grouping/lucene-grouping-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/highlighter/lucene-highlighter-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/join/lucene-join-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/memory/lucene-memory-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/misc/lucene-misc-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/queries/lucene-queries-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lucene-replicator-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/httpclient-4.5.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/httpcore-4.4.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-continuation-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-http-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-io-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-server-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-servlet-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/replicator/lib/jetty-util-9.4.11.v20180605.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/sandbox/lucene-sandbox-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial/lucene-spatial-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial3d/lucene-spatial3d-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lucene-spatial-extras-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lib/jts-core-1.15.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lib/s2-geometry-library-java-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lib/slf4j-api-1.7.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lib/spatial4j-0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/spatial-extras/lib/spatial4j-0.7-tests.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/suggest/lucene-suggest-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/test-framework/lucene-test-framework-7.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/test-framework/lib/junit-4.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/lucene-7.5.0/test-framework/lib/randomizedtesting-runner-2.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AKMANI/Desktop/lucene/lucenelibraries/jsoup-1.11.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
