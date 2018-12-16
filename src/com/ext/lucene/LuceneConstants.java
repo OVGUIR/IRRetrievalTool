@@ -1,7 +1,7 @@
 package com.ext.lucene;
 /*
  * Authors: Akhila Vockaligara Mani, Poorvi Mandyam Bhoolokam, Md Raahim Al Amin, Susmita Siddaramayya Mathapathi
- * This class contains the constants used in this task
+ * This class contains the constants used for this task
  */
 public class LuceneConstants {
    public static final String FILE_CONTENTS = "contents";

@@ -20,7 +20,7 @@ import org.apache.lucene.search.TopDocs;
  * Authors: Akhila Vockaligara Mani, Poorvi Mandyam Bhoolokam, Md Raahim Al Amin, Susmita Siddaramayya Mathapathi
  * This class invokes the method for searching the query in the indexed files
  * Also lists the ranks,score,filename,path,title for the documents found 
- * Uses the [OK]/[VS] method
+ * Uses the [OK]/[VS] ranking models
  */
 public class MyQueryParser {
 	/**
@@ -33,6 +33,7 @@ public class MyQueryParser {
 	 	* @return void
 	    */
 	public void searchIndexWithQueryParser(String indexfilepath,String userQuery,String rankingModel) throws IOException,ParseException{
+		SearchFields searchFields = new SearchFields();
 		Query query =null;
 		int hitsPerPage = 20000;
 		int top10Docs;
@@ -46,7 +47,7 @@ public class MyQueryParser {
 		IndexSearcher searcherIndex = new IndexSearcher(readerIndex);
 		Analyzer analyzer = new MyStemmingAnalyzer();
 		//Search multiple fields concurrently
-		MultiFieldQueryParser parser  = new MultiFieldQueryParser(SearchFields.getSearchFields(), analyzer);
+		MultiFieldQueryParser parser  = new MultiFieldQueryParser(searchFields.getSearchFields(), analyzer);
 		parser.setAllowLeadingWildcard(true);
 		try {
 			query = parser.parse(userQuery);

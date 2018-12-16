@@ -18,7 +18,7 @@ import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.FSDirectory;
 /*
  * Authors: Akhila Vockaligara Mani, Poorvi Mandyam Bhoolokam, Md Raahim Al Amin, Susmita Siddaramayya Mathapathi
- * This class invokes the methods for checking the file formats(.txt,.html), 
+ * This class invokes the methods for checking the file formats(.txt,.html) and
  * indexing mode(create/update), writing index to a specific location
  */
 public class Indexer 
@@ -48,7 +48,7 @@ public class Indexer
 			System.out.println("Invalid Options Chosen for Indexing");
 			System.exit(1);
 		}
-		System.out.println("\nTotal no of files "+createorupdate+"d: "+count);
+		System.out.println("Total no of files "+createorupdate+"d: "+count);
  		
  	}
  	
@@ -155,7 +155,7 @@ public class Indexer
  		}
  		System.out.println(file.getName());
  	}
-	// Closes the IndexWriter
+	// Close the IndexWriter
  	public void closeIndexWriter() 
  	{
  		try{ 

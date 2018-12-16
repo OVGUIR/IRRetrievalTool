@@ -4,10 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
+
 import org.apache.lucene.index.CorruptIndexException;
 /*
  * Authors: Akhila Vockaligara Mani, Poorvi Mandyam Bhoolokam, Md Raahim Al Amin, Susmita Siddaramayya Mathapathi
- * This class invocates the method for indexing
+ * This class invokes the method for indexing
  * The variables/attributes used in the class are-
  * 'inputDocumentsPath': of type String- the path of the document collection;
  * 'indexFilePath' : of type String- the path where indexed documents are to be stored;
@@ -19,7 +20,7 @@ public class ProcessQueries {
 	public static String indexFilePath = "";
 	public static String rankingModel = "";
 	public static String inputquery = "";
-	 public static void main(String[] args) throws FileNotFoundException, CorruptIndexException, IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException 
+	 public static void main(String[] args) throws FileNotFoundException,CorruptIndexException, IOException, ParseException, org.apache.lucene.queryparser.classic.ParseException 
      {
 		 if(args.length < 4) {
 			 System.out.println("Please provide the input in the below order");
